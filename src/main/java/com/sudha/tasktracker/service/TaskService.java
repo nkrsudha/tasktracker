@@ -31,9 +31,18 @@ public class TaskService {
     public Task updateTask(Long id, Task updatedTask) {
         return repository.findById(id)
                 .map(task -> {
-                    task.setTitle(updatedTask.getTitle());
-                    task.setDescription(updatedTask.getDescription());
-                    task.setCompleted(updatedTask.isCompleted());
+
+                    if (updatedTask.getTitle() != null) {
+                        task.setTitle(updatedTask.getTitle());
+                    }
+
+                    if (updatedTask.getDescription() != null) {
+                        task.setDescription(updatedTask.getDescription());
+
+                    }
+                    if (updatedTask.getCompleted() != null) {
+                        task.setCompleted(updatedTask.getCompleted());
+                    }
                     return repository.save(task);
                 })
                 .orElseThrow(() -> new RuntimeException("Task not found"));
