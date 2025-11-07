@@ -31,3 +31,23 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Spring Boot sensitive files ###
+application.properties
+application.yml
+.env
+
+### Logs ###
+*.log
+logs/
+log/
+debug.log
+
+### OS-specific ###
+.DS_Store
+Thumbs.db
+
+### Temporary / backup files ###
+*.tmp
+*.bak
+*.orig
