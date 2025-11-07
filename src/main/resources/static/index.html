@@ -64,6 +64,36 @@
 <body>
   <h1>Task Tracker</h1>
 
+  <!-- USER REGISTRATION SECTION -->
+  <section id="userSection">
+    <h2 style="text-align:center;">User Registration</h2>
+    <form id="userForm">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Register</button>
+    </form>
+
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <hr style="margin:40px 0;">
+
+  <!-- TASK TRACKER SECTION -->
+  <section id="taskSection">
+    <h2 style="text-align:center;">Tasks</h2>
+  
+
   <!-- Add Task Form -->
   <form id="taskForm">
     <input type="text" id="title" placeholder="Task Title" required />
