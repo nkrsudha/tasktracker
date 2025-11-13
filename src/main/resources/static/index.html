@@ -98,7 +98,11 @@
   <form id="taskForm">
     <input type="text" id="title" placeholder="Task Title" required />
     <input type="text" id="description" placeholder="Task Description" required />
-    <button type="submit">Add Task</button>
+    <!-- NEW: User Dropdown-->
+    <select id="taskUser" required>
+      <option value="">Assign to User</option>     
+    </select>
+      <button type="submit">Add Task</button>
   </form>
   
   <!-- Task Table -->
@@ -108,6 +112,7 @@
         <th>ID</th>
         <th>Title</th>
         <th>Description</th>
+        <th>Assigned User</th>
         <th>Completed</th>
         <th>Created At</th>
         <th>Delete</th>
