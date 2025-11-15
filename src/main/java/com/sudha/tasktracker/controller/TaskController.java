@@ -1,6 +1,7 @@
 package com.sudha.tasktracker.controller;
 
 import com.sudha.tasktracker.model.Task;
+import com.sudha.tasktracker.dto.TaskRequest;
 import com.sudha.tasktracker.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -28,8 +29,8 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        return service.createTask(task);
+    public Task createTask(@RequestBody TaskRequest request) {
+        return service.createTask(request);
     }
 
     @PutMapping("/{id}")
