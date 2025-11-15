@@ -22,6 +22,17 @@ async function loadUsers() {
     `;
     tbody.insertAdjacentHTML('beforeend', row);
   });
+
+  /** Update User Dropdown */
+  const userSelect = document.getElementById('taskUser');
+  userSelect.innerHTML = '<option value="">Assign to User</option>'; 
+
+  users.forEach(user => {
+    const option = document.createElement('option');
+    option.value = user.id;
+    option.textContent = user.username;
+    userSelect.appendChild(option);
+  });
 }
 
 // Handle user registration form submission
@@ -82,6 +93,7 @@ async function loadTasks() {
         <td>${task.id}</td>
         <td>${task.title}</td>
         <td>${task.description}</td>
+        <td>${task.user ? task.user.username : "-"}</td>
         <td>
           <button onclick="toggleCompleted(${task.id}, ${task.completed})">
             ${task.completed ? '✅ Yes' : '❌ No'}
@@ -143,8 +155,13 @@ document.querySelector('#taskForm').addEventListener('submit', async (e) => {
     alert('⚠️ Please enter both title and description!');
     return;
   }
+  const userId = document.getElementById('taskUser').value;
 
-  const newTask = { title, description };
+  if (!userId) {
+    alert('⚠️ Please assign the task to a user!');
+    return;
+  } 
+  const newTask = { title, description, userId };
 
   const response = await fetch('/api/tasks', {
     method: 'POST',
