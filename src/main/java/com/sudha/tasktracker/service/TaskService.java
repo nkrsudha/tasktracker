@@ -34,7 +34,10 @@ public class TaskService {
     // NEW: Create task using DTO
     public Task createTask(TaskRequest request) {
 
-        User user = userRepository.findById(request.getUserId())
+        User user = null;
+
+        if (request.getUserId() != null)
+         user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Task task = new Task();
