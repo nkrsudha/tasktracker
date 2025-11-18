@@ -2,6 +2,8 @@ package com.sudha.tasktracker.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sudha.tasktracker.model.User;
 
 @Entity
@@ -18,6 +20,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"tasks"})
     private User user;
 
     // Getters and Setters

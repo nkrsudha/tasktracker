@@ -3,6 +3,8 @@ package com.sudha.tasktracker.model;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "users") // rename table to avoid conflicts with SQL keyword "user"
 public class User {
@@ -21,6 +23,7 @@ public class User {
 
     // One user can have many tasks
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"user"}) // to prevent recursion during serialization
     private List<Task> tasks;
 
     // Getters and Setters
