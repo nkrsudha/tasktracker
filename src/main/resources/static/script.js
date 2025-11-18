@@ -1,6 +1,6 @@
 // Load all users and display them
 async function loadUsers() {
-  const response = await fetch('/api/users');
+  const response = await fetch('/users');
   const users = await response.json();
 
   const tbody = document.querySelector('#userTable tbody');
@@ -45,7 +45,7 @@ document.querySelector('#userForm').addEventListener('submit', async (e) => {
     password: document.querySelector('#password').value
   };
 
-  const response = await fetch('/api/users', {
+  const response = await fetch('/users', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user)
@@ -64,7 +64,7 @@ document.querySelector('#userForm').addEventListener('submit', async (e) => {
 async function deleteUser(id) {
   if (!confirm('Are you sure you want to delete this user?')) return;
 
-  const response = await fetch(`/api/users/${id}`, {
+  const response = await fetch(`/users/${id}`, {
     method: 'DELETE'
   });
 
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', loadUsers);
 
 // Load all tasks and display them in the table
 async function loadTasks() {
-  const response = await fetch('/api/tasks');
+  const response = await fetch('/tasks');
   const tasks = await response.json();
 
   const tbody = document.querySelector('#taskTable tbody');
@@ -112,33 +112,33 @@ async function loadTasks() {
   });
 }
 
-// Toggle the "completed" status
+// Toggle completed
 async function toggleCompleted(id, currentStatus) {
   const updatedTask = { completed: !currentStatus };
 
-  const response = await fetch(`/api/tasks/${id}`, {
+  const response = await fetch(`/tasks/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updatedTask)
   });
 
   if (response.ok) {
-    loadTasks(); // Reload table after update
+    loadTasks();
   } else {
     alert('❌ Failed to update task.');
   }
 }
 
-// Delete a task by ID
+// Delete task
 async function deleteTask(id) {
   if (!confirm('Are you sure you want to delete this task?')) return;
 
-  const response = await fetch(`/api/tasks/${id}`, {
+  const response = await fetch(`/tasks/${id}`, {
     method: 'DELETE'
   });
 
   if (response.ok) {
-    loadTasks(); // Reload table after deletion
+    loadTasks();
   } else {
     alert('❌ Failed to delete task.');
   }
@@ -150,20 +150,21 @@ document.querySelector('#taskForm').addEventListener('submit', async (e) => {
 
   const title = document.querySelector('#title').value.trim();
   const description = document.querySelector('#description').value.trim();
+  const userId = document.getElementById('taskUser').value;
 
   if (!title || !description) {
     alert('⚠️ Please enter both title and description!');
     return;
   }
-  const userId = document.getElementById('taskUser').value;
 
   if (!userId) {
     alert('⚠️ Please assign the task to a user!');
     return;
-  } 
+  }
+
   const newTask = { title, description, userId };
 
-  const response = await fetch('/api/tasks', {
+  const response = await fetch('/tasks', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newTask)
@@ -177,5 +178,5 @@ document.querySelector('#taskForm').addEventListener('submit', async (e) => {
   }
 });
 
-// Load tasks when the page loads
+// Load tasks when page loads
 document.addEventListener('DOMContentLoaded', loadTasks);
