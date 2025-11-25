@@ -1,6 +1,13 @@
+function showSection(sectionId) {
+  document.getElementById('userSection').style.display = "none";
+  document.getElementById('taskSection').style.display = "none";
+
+  document.getElementById(sectionId).style.display = "block";
+}
+
 // Load all users and display them
 async function loadUsers() {
-  const response = await fetch('/users');
+  const response = await fetch('/api/users');
   const users = await response.json();
 
   const tbody = document.querySelector('#userTable tbody');
@@ -45,7 +52,7 @@ document.querySelector('#userForm').addEventListener('submit', async (e) => {
     password: document.querySelector('#password').value
   };
 
-  const response = await fetch('/users', {
+  const response = await fetch('/api/users', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user)
@@ -64,7 +71,7 @@ document.querySelector('#userForm').addEventListener('submit', async (e) => {
 async function deleteUser(id) {
   if (!confirm('Are you sure you want to delete this user?')) return;
 
-  const response = await fetch(`/users/${id}`, {
+  const response = await fetch(`/api/users/${id}`, {
     method: 'DELETE'
   });
 
@@ -81,7 +88,7 @@ document.addEventListener('DOMContentLoaded', loadUsers);
 
 // Load all tasks and display them in the table
 async function loadTasks() {
-  const response = await fetch('/tasks');
+  const response = await fetch('/api/tasks');
   const tasks = await response.json();
 
   const tbody = document.querySelector('#taskTable tbody');
@@ -116,7 +123,7 @@ async function loadTasks() {
 async function toggleCompleted(id, currentStatus) {
   const updatedTask = { completed: !currentStatus };
 
-  const response = await fetch(`/tasks/${id}`, {
+  const response = await fetch(`/api/tasks/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updatedTask)
@@ -133,7 +140,7 @@ async function toggleCompleted(id, currentStatus) {
 async function deleteTask(id) {
   if (!confirm('Are you sure you want to delete this task?')) return;
 
-  const response = await fetch(`/tasks/${id}`, {
+  const response = await fetch(`/api/tasks/${id}`, {
     method: 'DELETE'
   });
 
@@ -164,7 +171,7 @@ document.querySelector('#taskForm').addEventListener('submit', async (e) => {
 
   const newTask = { title, description, userId };
 
-  const response = await fetch('/tasks', {
+  const response = await fetch('/api/tasks', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newTask)

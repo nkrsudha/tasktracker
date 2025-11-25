@@ -4,28 +4,67 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Task Tracker</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 30px;
+      margin: 0;
       background-color: #f9f9f9;
     }
-    h1 {
-      text-align: center;
-      color: #333;
+
+    /* HEADER BAR */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: #222;
+      color: white;
     }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-icons i {
+      font-size: 28px;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+
+    .nav-icons i:hover {
+      color: #4CAF50;
+    }
+
+    /* Main Content */
+    section {
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
     form {
       margin: 0 auto;
-      max-width: 500px;
+      max-width: 650px;
       display: flex;
       gap: 10px;
       justify-content: center;
       margin-bottom: 20px;
     }
-    input, button {
+
+    input, button, select {
       padding: 10px;
       font-size: 14px;
     }
+
     button {
       background-color: #4CAF50;
       color: white;
@@ -33,79 +72,75 @@
       cursor: pointer;
       border-radius: 4px;
     }
-    button:hover {
-      background-color: #45a049;
-    }
+
     table {
       width: 90%;
-      margin: 0 auto;
+      margin: 20px auto;
       border-collapse: collapse;
       background: white;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
+
     th, td {
       padding: 10px;
       border: 1px solid #ccc;
       text-align: center;
     }
+
     th {
       background-color: #f2f2f2;
-    }
-    .completed {
-      color: green;
-      font-weight: bold;
-    }
-    .not-completed {
-      color: red;
-      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>Task Tracker</h1>
 
-  <!-- USER REGISTRATION SECTION -->
-  <section id="userSection">
-    <h2 style="text-align:center;">User Registration</h2>
-    <form id="userForm">
-      <input type="text" id="username" placeholder="Username" required />
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <button type="submit">Register</button>
-    </form>
+<!-- TOP NAVIGATION -->
+<header>
+  <h1>📋 Task Tracker</h1>
 
-    <table id="userTable">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </section>
+  <div class="nav-icons">
+    <i class="fa fa-users" onclick="showSection('userSection')" title="Users"></i>
+    <i class="fa fa-tasks" onclick="showSection('taskSection')" title="Tasks"></i>
+  </div>
+</header>
 
-  <hr style="margin:40px 0;">
+<!-- USER SECTION -->
+<section id="userSection" style="display:none;">
+  <h2>User Registration</h2>
 
-  <!-- TASK TRACKER SECTION -->
-  <section id="taskSection">
-    <h2 style="text-align:center;">Tasks</h2>
-  
+  <form id="userForm">
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button type="submit">Register</button>
+  </form>
 
-  <!-- Add Task Form -->
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<!-- TASK SECTION -->
+<section id="taskSection" style="display:none;">
+  <h2>Tasks</h2>
+
   <form id="taskForm">
     <input type="text" id="title" placeholder="Task Title" required />
     <input type="text" id="description" placeholder="Task Description" required />
-    <!-- NEW: User Dropdown-->
     <select id="taskUser" required>
-      <option value="">Assign to User</option>     
+      <option value="">Assign to User</option>
     </select>
-      <button type="submit">Add Task</button>
+    <button type="submit">Add Task</button>
   </form>
-  
-  <!-- Task Table -->
+
   <table id="taskTable">
     <thead>
       <tr>
@@ -120,7 +155,17 @@
     </thead>
     <tbody></tbody>
   </table>
+</section>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
+
+<script>
+  function showSection(sectionId) {
+    document.getElementById("userSection").style.display = "none";
+    document.getElementById("taskSection").style.display = "none";
+    document.getElementById(sectionId).style.display = "block";
+  }
+</script>
+
 </body>
 </html>
