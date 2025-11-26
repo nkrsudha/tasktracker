@@ -1,3 +1,4 @@
+let users = [];
 function showSection(sectionId) {
   document.getElementById('userSection').style.display = "none";
   document.getElementById('taskSection').style.display = "none";
@@ -8,7 +9,7 @@ function showSection(sectionId) {
 // Load all users and display them
 async function loadUsers() {
   const response = await fetch('/api/users');
-  const users = await response.json();
+  users = await response.json();
 
   const tbody = document.querySelector('#userTable tbody');
   tbody.innerHTML = '';
@@ -40,6 +41,8 @@ async function loadUsers() {
     option.textContent = user.username;
     userSelect.appendChild(option);
   });
+
+  loadTasks();
 }
 
 // Handle user registration form submission
@@ -100,7 +103,18 @@ async function loadTasks() {
         <td>${task.id}</td>
         <td>${task.title}</td>
         <td>${task.description}</td>
-        <td>${task.user ? task.user.username : "-"}</td>
+        <td>
+    <select class="task-assign-select" data-task-id="${task.id}">
+        <option value="">Unassigned</option>
+        ${users.map(user => `
+            <option value="${user.id}"
+                ${task.assignedUser && task.assignedUser.id === user.id ? "selected" : ""}>
+                ${user.username}
+            </option>
+        `).join("")}
+    </select>
+</td>
+
         <td>
           <button onclick="toggleCompleted(${task.id}, ${task.completed})">
             ${task.completed ? '✅ Yes' : '❌ No'}
@@ -186,4 +200,24 @@ document.querySelector('#taskForm').addEventListener('submit', async (e) => {
 });
 
 // Load tasks when page loads
-document.addEventListener('DOMContentLoaded', loadTasks);
+
+document.addEventListener("change", function (event) {
+    if (event.target.classList.contains("task-assign-select")) {
+
+        const taskId = event.target.getAttribute("data-task-id");
+        const userId = event.target.value;
+
+        fetch(`http://localhost:8080/tasks/${taskId}/assign`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId: userId === "" ? null : userId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert("User updated successfully!");
+            loadTasks(); // Refresh table
+        })
+        .catch(err => console.error(err));
+    }
+});
+
