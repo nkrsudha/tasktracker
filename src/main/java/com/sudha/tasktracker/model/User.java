@@ -1,6 +1,8 @@
 package com.sudha.tasktracker.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -22,9 +24,9 @@ public class User {
     private String password;
 
     // One user can have many tasks
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"user"}) // to prevent recursion during serialization
-    private List<Task> tasks;
+    @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"assignedUser"}) // to prevent recursion during serialization
+    private List<Task> tasks = new ArrayList<>();
 
     // Getters and Setters
     public Long getId() 

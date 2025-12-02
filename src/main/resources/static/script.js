@@ -108,7 +108,7 @@ async function loadTasks() {
         <option value="">Unassigned</option>
         ${users.map(user => `
             <option value="${user.id}"
-                ${task.assignedUser && task.assignedUser.id === user.id ? "selected" : ""}>
+                ${task.assignedUser && Number(task.assignedUser.id) === Number(user.id) ? "selected" : ""}>
                 ${user.username}
             </option>
         `).join("")}
@@ -207,7 +207,7 @@ document.addEventListener("change", function (event) {
         const taskId = event.target.getAttribute("data-task-id");
         const userId = event.target.value;
 
-        fetch(`http://localhost:8080/tasks/${taskId}/assign`, {
+        fetch(`/api/tasks/${taskId}/assign`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ userId: userId === "" ? null : userId })

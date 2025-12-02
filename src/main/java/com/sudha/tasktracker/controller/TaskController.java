@@ -5,6 +5,7 @@ import com.sudha.tasktracker.dto.TaskRequest;
 import com.sudha.tasktracker.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -42,4 +43,13 @@ public class TaskController {
     public void deleteTask(@PathVariable Long id) {
         service.deleteTask(id);
     }
+    @PutMapping("/{id}/assign")
+public Task assignUserToTask(@PathVariable Long id, @RequestBody Map<String, Long> body) {
+
+    Long userId = body.get("userId");
+
+    return service.assignUser(id, userId);
+}
+
+
 }

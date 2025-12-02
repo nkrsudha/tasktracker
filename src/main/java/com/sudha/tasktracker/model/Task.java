@@ -21,7 +21,7 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"tasks"})
-    private User user;
+    private User assignedUser;
 
     // Getters and Setters
     public Long getId() {
@@ -64,11 +64,11 @@ public class Task {
         this.createdAt = createdAt;
     }
 
-    public User getUser() {
-        return user;
+    public User getAssignedUser() {
+        return assignedUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAssignedUser(User assigneduser) {
+        this.assignedUser = assigneduser;
     }
 }

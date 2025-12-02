@@ -44,7 +44,7 @@ public class TaskService {
         task.setTitle(request.getTitle());
         task.setDescription(request.getDescription());
         task.setCompleted(false);
-        task.setUser(user);
+        task.setAssignedUser(user);
 
         return repository.save(task);
     }
@@ -76,4 +76,22 @@ public class TaskService {
     public void deleteTask(Long id) {
         repository.deleteById(id);
     }
+    public Task assignUser(Long taskId, Long userId) {
+
+    Task task = repository.findById(taskId)
+            .orElseThrow(() -> new RuntimeException("Task not found"));
+
+    if (userId == null) {
+        task.setAssignedUser(null);
+    } else {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        task.setAssignedUser(user);
+    }
+
+    return repository.save(task);
 }
+
+}
+
+ 
