@@ -6,6 +6,34 @@ function showSection(sectionId) {
   document.getElementById(sectionId).style.display = "block";
 }
 
+function statusLabel(v) {
+  if (v === "IN_PROGRESS") return "In progress";
+  if (v === "COMPLETED") return "Completed";
+  return "To do";
+}
+
+function statusOptions(selected) {
+  const values = ["TO_DO", "IN_PROGRESS", "COMPLETED"];
+  return values
+    .map(v => `<option value="${v}" ${v === selected ? "selected" : ""}>${statusLabel(v)}</option>`)
+    .join("");
+}
+
+async function updateStatus(id, status) {
+  const response = await fetch(`/api/tasks/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status })
+  });
+
+  if (response.ok) {
+    loadTasks();
+  } else {
+    alert("❌ Failed to update status.");
+  }
+}
+
+
 // Load all users and display them
 async function loadUsers() {
   const response = await fetch('/api/users');
@@ -116,10 +144,11 @@ async function loadTasks() {
 </td>
 
         <td>
-          <button onclick="toggleCompleted(${task.id}, ${task.completed})">
-            ${task.completed ? '✅ Yes' : '❌ No'}
-          </button>
+          <select onchange="updateStatus(${task.id}, this.value)">
+            ${statusOptions(task.status)}
+          </select>
         </td>
+
         <td>${new Date(task.createdAt).toLocaleString()}</td>
         <td>
           <button onclick="deleteTask(${task.id})"
@@ -131,23 +160,6 @@ async function loadTasks() {
     `;
     tbody.insertAdjacentHTML('beforeend', row);
   });
-}
-
-// Toggle completed
-async function toggleCompleted(id, currentStatus) {
-  const updatedTask = { completed: !currentStatus };
-
-  const response = await fetch(`/api/tasks/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updatedTask)
-  });
-
-  if (response.ok) {
-    loadTasks();
-  } else {
-    alert('❌ Failed to update task.');
-  }
 }
 
 // Delete task

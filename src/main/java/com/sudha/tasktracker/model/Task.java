@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sudha.tasktracker.model.User;
+import com.sudha.tasktracker.model.TaskStatus;
 
 @Entity
 @Table(name = "tasks")
@@ -16,14 +17,16 @@ public class Task {
 
     private String title;
     private String description;
-    private Boolean completed = false;
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"tasks"})
     private User assignedUser;
-
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TaskStatus status = TaskStatus.TO_DO;
+    
     // Getters and Setters
     public Long getId() {
         return id;
@@ -49,14 +52,6 @@ public class Task {
         this.description = description;
     }
 
-    public Boolean getCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(Boolean completed) {
-        this.completed = completed;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -71,5 +66,12 @@ public class Task {
 
     public void setAssignedUser(User assigneduser) {
         this.assignedUser = assigneduser;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 }

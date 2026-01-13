@@ -1,5 +1,6 @@
 package com.sudha.tasktracker.service;
 
+import com.sudha.tasktracker.model.TaskStatus;
 import com.sudha.tasktracker.model.Task;
 import com.sudha.tasktracker.model.User;
 import com.sudha.tasktracker.dto.TaskRequest;
@@ -43,9 +44,10 @@ public class TaskService {
         Task task = new Task();
         task.setTitle(request.getTitle());
         task.setDescription(request.getDescription());
-        task.setCompleted(false);
+      
         task.setAssignedUser(user);
 
+        task.setStatus(request.getStatus() != null ? request.getStatus() : TaskStatus.TO_DO);
         return repository.save(task);
     }
 
@@ -62,10 +64,9 @@ public class TaskService {
                     {
                         task.setDescription(updatedTask.getDescription());
                     }
-
-                    if (updatedTask.getCompleted() != null) 
+                    if (updatedTask.getStatus() != null) 
                     {
-                        task.setCompleted(updatedTask.getCompleted());
+                        task.setStatus(updatedTask.getStatus());
                     }
 
                     return repository.save(task);
