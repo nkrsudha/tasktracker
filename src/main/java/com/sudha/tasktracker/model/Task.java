@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sudha.tasktracker.model.User;
 
 @Entity
+@Table(name = "tasks")
 public class Task {
 
     @Id
