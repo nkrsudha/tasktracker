@@ -3,6 +3,7 @@ package com.sudha.tasktracker.controller;
 import com.sudha.tasktracker.model.Task;
 import com.sudha.tasktracker.dto.TaskRequest;
 import com.sudha.tasktracker.service.TaskService;
+import com.sudha.tasktracker.model.TaskStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,17 @@ public Task assignUserToTask(@PathVariable Long id, @RequestBody Map<String, Lon
 
     return service.assignUser(id, userId);
 }
+
+@GetMapping("/by-user/{username}")
+public List<TaskPopupDto> getTasksByUsername(@PathVariable String username) {
+    return service.getTasksByUsername(username)
+            .stream()
+            .map(t -> new TaskPopupDto(t.getTitle(), t.getStatus()))
+            .toList();
+}
+
+public record TaskPopupDto(String title, TaskStatus status) {}
+
 
 
 }

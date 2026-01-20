@@ -27,6 +27,12 @@ public class TaskService {
         return repository.findAll();
     }
 
+    public List<Task> getTasksByUsername(String username) 
+    {
+    return repository.findByAssignedUser_UsernameIgnoreCase(username);
+    }
+
+
     public Optional<Task> getTaskById(Long id) 
     {
         return repository.findById(id);
