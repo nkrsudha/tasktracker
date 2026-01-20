@@ -51,3 +51,6 @@ Thumbs.db
 *.tmp
 *.bak
 *.orig
+
+### Local-only Spring Boot config
+src/main/resources/application-local.properties
