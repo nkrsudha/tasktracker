@@ -46,7 +46,7 @@ async function loadUsers() {
     const row = `
       <tr>
         <td>${user.id}</td>
-        <td>${user.username}</td>
+        <td><a href="#" class="user-link user-popup" data-username="${escapeHtml(user.username)}">${escapeHtml(user.username)}</a></td>
         <td>${user.email}</td>
         <td>
           <button onclick="deleteUser(${user.id})"
@@ -233,3 +233,86 @@ document.addEventListener("change", function (event) {
     }
 });
 
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  // Popup elements
+  const userTasksModal = document.getElementById("userTasksModal");
+  const closeUserTasksModal = document.getElementById("closeUserTasksModal");
+  const userTasksTitle = document.getElementById("userTasksTitle");
+  const userTasksMsg = document.getElementById("userTasksMsg");
+  const userTasksTable = document.getElementById("userTasksTable");
+  const userTasksBody = document.getElementById("userTasksBody");
+
+  // Safety check (prevents crash)
+  if (!userTasksModal || !closeUserTasksModal || !userTasksTitle || !userTasksMsg || !userTasksTable || !userTasksBody) {
+    console.error("Popup modal elements not found. Check IDs in HTML.");
+    return;
+  }
+
+  // Close popup
+  closeUserTasksModal.addEventListener("click", () => {
+    userTasksModal.style.display = "none";
+  });
+
+  // Close when clicking outside the box
+  userTasksModal.addEventListener("click", (e) => {
+    if (e.target === userTasksModal) userTasksModal.style.display = "none";
+  });
+
+  // Click username -> open popup and load tasks
+  document.addEventListener("click", async (e) => {
+    const link = e.target.closest(".user-popup");
+    if (!link) return;
+
+    e.preventDefault();
+
+    const username = link.dataset.username;
+
+    // Reset popup UI
+    userTasksTitle.textContent = `Tasks for ${username}`;
+    userTasksMsg.textContent = "Loading...";
+    userTasksMsg.style.display = "block";
+    userTasksTable.style.display = "none";
+    userTasksBody.innerHTML = "";
+
+    // Show popup
+    userTasksModal.style.display = "block";
+
+    try {
+      const res = await fetch(`/api/tasks/by-user/${encodeURIComponent(username)}`, {
+        credentials: "same-origin"
+      });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+
+      const tasks = await res.json();
+
+      if (!tasks || tasks.length === 0) {
+        userTasksMsg.textContent = "No tasks for this user.";
+        return;
+      }
+
+      userTasksMsg.style.display = "none";
+      userTasksTable.style.display = "table";
+
+      tasks.forEach(t => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${escapeHtml(t.title)}</td><td>${escapeHtml(t.status)}</td>`;
+        userTasksBody.appendChild(tr);
+      });
+
+    } catch (err) {
+      console.error(err);
+      userTasksMsg.textContent = "Failed to load tasks.";
+    }
+  });
+
+});

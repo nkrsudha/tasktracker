@@ -90,6 +90,49 @@
     th {
       background-color: #f2f2f2;
     }
+    /* Popup Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+}
+.modal-box {
+  background: white;
+  width: 80%;
+  max-width: 700px;
+  margin: 80px auto;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+.modal-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.modal-table th, .modal-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+.user-link {
+  color: #1a73e8;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
   </style>
 </head>
 <body>
@@ -157,8 +200,6 @@
   </table>
 </section>
 
-<script src="script.js"></script>
-
 <script>
   function showSection(sectionId) {
     document.getElementById("userSection").style.display = "none";
@@ -166,6 +207,26 @@
     document.getElementById(sectionId).style.display = "block";
   }
 </script>
+<script src="script.js"></script>
 
+<!-- Popup: User Tasks -->
+<div id="userTasksModal" class="modal-overlay">
+  <div class="modal-box">
+    <button id="closeUserTasksModal" class="modal-close">✖</button>
+    <h3 id="userTasksTitle">User Tasks</h3>
+
+    <div id="userTasksMsg">Loading...</div>
+
+    <table id="userTasksTable" class="modal-table" style="display:none;">
+      <thead>
+        <tr>
+          <th>Task Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="userTasksBody"></tbody>
+    </table>
+  </div>
+</div>
 </body>
 </html>

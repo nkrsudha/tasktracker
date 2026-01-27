@@ -56,12 +56,8 @@ public Task assignUserToTask(@PathVariable Long id, @RequestBody Map<String, Lon
 public List<TaskPopupDto> getTasksByUsername(@PathVariable String username) {
     return service.getTasksByUsername(username)
             .stream()
-            .map(t -> new TaskPopupDto(t.getTitle(), t.getStatus()))
+            .map(t -> new TaskPopupDto(t.getTitle(), String.valueOf(t.getStatus())))
             .toList();
 }
-
-public record TaskPopupDto(String title, TaskStatus status) {}
-
-
-
+public record TaskPopupDto(String title, String status) {}
 }
