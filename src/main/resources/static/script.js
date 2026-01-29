@@ -7,10 +7,13 @@ function showSection(sectionId) {
 }
 
 function statusLabel(v) {
-  if (v === "IN_PROGRESS") return "In progress";
-  if (v === "COMPLETED") return "Completed";
-  return "To do";
+  if (!v) return "";
+  return v
+    .toLowerCase()
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, c => c.toUpperCase());
 }
+
 
 function statusOptions(selected) {
   const values = ["TO_DO", "IN_PROGRESS", "COMPLETED"];
@@ -305,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       tasks.forEach(t => {
         const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${escapeHtml(t.title)}</td><td>${escapeHtml(t.status)}</td>`;
+        tr.innerHTML = `<td>${escapeHtml(t.title)}</td><td>${escapeHtml(statusLabel(t.status))}</td>`;
         userTasksBody.appendChild(tr);
       });
 
