@@ -35,7 +35,7 @@
     .nav-icons i {
       font-size: 28px;
       cursor: pointer;
-      margin-left: 20px;
+    
     }
 
     .nav-icons i:hover {
@@ -51,7 +51,7 @@
       text-align: center;
     }
 
-    form {
+   #userForm, #taskForm {
       margin: 0 auto;
       max-width: 650px;
       display: flex;
@@ -131,8 +131,28 @@
   text-decoration: underline;
   cursor: pointer;
 }
+  .nav-icons{
+    display: flex;
+    align-items: center;
+    gap: 20px;          
+  }
 
+  .nav-icons i{
+    margin-left: 0;     /* remove old spacing since we use gap now */
+  }
 
+  .logout-btn{
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .logout-btn:hover{
+    color: #4CAF50;
+  }
   </style>
 </head>
 <body>
@@ -144,6 +164,12 @@
   <div class="nav-icons">
     <i class="fa fa-users" onclick="showSection('userSection')" title="Users"></i>
     <i class="fa fa-tasks" onclick="showSection('taskSection')" title="Tasks"></i>
+  
+    <form action="/logout" method="post" style="margin:0;">
+      <button type="submit" class="logout-btn" title="Logout">
+        <i class="fa fa-right-from-bracket"></i>
+      </button>
+    </form>
   </div>
 </header>
 
