@@ -8,14 +8,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    body {
+    body 
+    {
       font-family: Arial, sans-serif;
       margin: 0;
       background-color: #f9f9f9;
     }
-
     /* HEADER BAR */
-    header {
+    header 
+    {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -24,7 +25,8 @@
       color: white;
     }
 
-    header h1 {
+    header h1 
+    {
       margin: 0;
       font-size: 26px;
       display: flex;
@@ -32,26 +34,31 @@
       gap: 10px;
     }
 
-    .nav-icons i {
+    .nav-icons i 
+    {
       font-size: 28px;
       cursor: pointer;
     
     }
 
-    .nav-icons i:hover {
+    .nav-icons i:hover 
+    {
       color: #4CAF50;
     }
 
     /* Main Content */
-    section {
+    section 
+    {
       padding: 30px;
     }
 
-    h2 {
+    h2 
+    {
       text-align: center;
     }
 
-   #userForm, #taskForm {
+   #userForm, #taskForm 
+   {
       margin: 0 auto;
       max-width: 650px;
       display: flex;
@@ -60,12 +67,14 @@
       margin-bottom: 20px;
     }
 
-    input, button, select {
+    input, button, select 
+    {
       padding: 10px;
       font-size: 14px;
     }
 
-    button {
+    button 
+    {
       background-color: #4CAF50;
       color: white;
       border: none;
@@ -73,7 +82,8 @@
       border-radius: 4px;
     }
 
-    table {
+    table
+     {
       width: 90%;
       margin: 20px auto;
       border-collapse: collapse;
@@ -81,78 +91,90 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
-    th, td {
+    th, td 
+    {
       padding: 10px;
       border: 1px solid #ccc;
       text-align: center;
     }
 
-    th {
+    th
+    {
       background-color: #f2f2f2;
     }
     /* Popup Modal */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 9999;
-}
-.modal-box {
-  background: white;
-  width: 80%;
-  max-width: 700px;
-  margin: 80px auto;
-  padding: 20px;
-  border-radius: 8px;
-  position: relative;
-}
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  border: none;
-  background: transparent;
-  font-size: 18px;
-  cursor: pointer;
-}
-.modal-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-.modal-table th, .modal-table td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-}
-.user-link {
-  color: #1a73e8;
-  text-decoration: underline;
-  cursor: pointer;
-}
-  .nav-icons{
-    display: flex;
-    align-items: center;
-    gap: 20px;          
-  }
+    .modal-overlay 
+    {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 9999;
+    }
+    .modal-box 
+    {
+      background: white;
+      width: 80%;
+      max-width: 700px;
+      margin: 80px auto;
+      padding: 20px;
+      border-radius: 8px;
+      position: relative;
+    }
+    .modal-close 
+    {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      border: none;
+      background: transparent;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .modal-table 
+    {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .modal-table th, .modal-table td
+    {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    .user-link 
+    {
+      color: #1a73e8;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .nav-icons
+    {
+      display: flex;
+      align-items: center;
+      gap: 20px;          
+    }
 
-  .nav-icons i{
-    margin-left: 0;     /* remove old spacing since we use gap now */
-  }
+    .nav-icons i
+    {
+      margin-left: 0;     
+    }
 
-  .logout-btn{
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 28px;
-    cursor: pointer;
-    padding: 0;
-  }
+    .logout-btn
+    {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 0;
+    }
 
-  .logout-btn:hover{
-    color: #4CAF50;
-  }
+    .logout-btn:hover
+    {
+      color: #4CAF50;
+    }
   </style>
 </head>
 <body>
