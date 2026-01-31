@@ -118,8 +118,10 @@ async function deleteUser(id) {
 }
 
 // Load users when the page loads
-document.addEventListener('DOMContentLoaded', loadUsers);
-
+document.addEventListener('DOMContentLoaded', () => {
+  showSection('userSection');
+  loadUsers();
+});
 // Load all tasks and display them in the table
 async function loadTasks() {
   const response = await fetch('/api/tasks');
