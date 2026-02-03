@@ -20,18 +20,6 @@ public class SecurityConfig {
   PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
-// TEMPORARY: In-memory user for development/testing only.
-// Will be replaced with database-backed authentication.
-
-  @Bean
-  public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-    UserDetails user = User.withUsername("sudha")
-        .password(passwordEncoder.encode("password"))
-        .roles("USER")
-        .build();
-
-    return new InMemoryUserDetailsManager(user);
-  }
 
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
