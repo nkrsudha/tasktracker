@@ -184,7 +184,7 @@
   <h1>📋 Task Tracker</h1>
 
   <div class="nav-icons">
-    <i class="fa fa-users" onclick="showSection('userSection')" title="Users"></i>
+    <i id="usersBtn" class="fa fa-users" onclick="showSection('userSection')" title="Users"></i>
     <i class="fa fa-tasks" onclick="showSection('taskSection')" title="Tasks"></i>
   
     <form action="/logout" method="post" style="margin:0;">
@@ -220,7 +220,7 @@
 </section>
 
 <!-- TASK SECTION -->
-<section id="taskSection" style="display:none;">
+<section id="taskSection">
   <h2>Tasks</h2>
 
   <form id="taskForm">
@@ -229,7 +229,7 @@
     <select id="taskUser" required>
       <option value="">Assign to User</option>
     </select>
-    <button type="submit">Add Task</button>
+    <button id="addTaskBtn" type="submit">Add Task</button>
   </form>
 
   <table id="taskTable">
@@ -241,7 +241,7 @@
         <th>Assigned User</th>
         <th>Status</th>
         <th>Created At</th>
-        <th>Delete</th>
+        <th id="deleteHeader">Delete</th>
       </tr>
     </thead>
     <tbody></tbody>

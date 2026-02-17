@@ -3,8 +3,10 @@ package com.sudha.tasktracker.controller;
 import com.sudha.tasktracker.model.User;
 import com.sudha.tasktracker.service.UserService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
 
+@PreAuthorize("hasRole('ADMIN')") // Only admins can manage users
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "*") // allows connection from any frontend

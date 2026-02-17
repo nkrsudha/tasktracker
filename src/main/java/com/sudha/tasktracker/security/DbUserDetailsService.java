@@ -1,6 +1,6 @@
 package com.sudha.tasktracker.security;
 
-import com.sudha.tasktracker.model.User;   // use your actual entity name
+import com.sudha.tasktracker.model.User;   
 import com.sudha.tasktracker.repository.UserRepository;
 import java.util.List;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,10 +21,12 @@ public class DbUserDetailsService implements UserDetailsService {
     User u = userRepository.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
+    String roleName = "ROLE_" + u.getRole().name(); // ADMIN/USER/VIEWER -> ROLE_ADMIN/ROLE_USER/ROLE_VIEWER
+    
     return new org.springframework.security.core.userdetails.User(
         u.getUsername(),
         u.getPassword(), 
-        List.of(new SimpleGrantedAuthority("ROLE_USER"))
+        List.of(new SimpleGrantedAuthority(roleName))
     );
   }
 }

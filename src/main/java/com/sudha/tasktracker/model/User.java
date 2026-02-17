@@ -1,14 +1,15 @@
 package com.sudha.tasktracker.model;
 
 import jakarta.persistence.*;
-
+import com.sudha.tasktracker.model.Role;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "users") // rename table to avoid conflicts with SQL keyword "user"
+@Table(name = "users")  
 public class User {
 
     @Id
@@ -21,7 +22,12 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonIgnore
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.USER; 
 
     // One user can have many tasks
     @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL)
@@ -72,5 +78,14 @@ public class User {
     public void setTasks(List<Task> tasks) 
     { 
         this.tasks = tasks; 
+    }
+
+    public Role getRole() 
+    {
+        return role;
+    }
+    public void setRole(Role role) 
+    {
+        this.role = role;
     }
 }

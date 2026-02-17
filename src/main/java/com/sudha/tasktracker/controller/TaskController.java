@@ -5,6 +5,7 @@ import com.sudha.tasktracker.dto.TaskRequest;
 import com.sudha.tasktracker.service.TaskService;
 import com.sudha.tasktracker.model.TaskStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
 import java.util.Map;
 
@@ -44,11 +45,12 @@ public class TaskController {
     public void deleteTask(@PathVariable Long id) {
         service.deleteTask(id);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/assign")
-public Task assignUserToTask(@PathVariable Long id, @RequestBody Map<String, Long> body) {
+public Task assignUserToTask(@PathVariable Long id, @RequestBody Map<String, Long> body) 
+{
 
     Long userId = body.get("userId");
-
     return service.assignUser(id, userId);
 }
 

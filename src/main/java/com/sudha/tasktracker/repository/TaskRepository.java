@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByAssignedUser_UsernameIgnoreCase(String username);
+    boolean existsByIdAndAssignedUser_UsernameIgnoreCase(Long id,String username);
 }
+

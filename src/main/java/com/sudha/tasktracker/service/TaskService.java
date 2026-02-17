@@ -7,6 +7,7 @@ import com.sudha.tasktracker.dto.TaskRequest;
 import com.sudha.tasktracker.repository.TaskRepository;
 import com.sudha.tasktracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Optional;
@@ -79,7 +80,7 @@ public class TaskService {
                 })
                 .orElseThrow(() -> new RuntimeException("Task not found"));
     }
-
+    @PreAuthorize("hasRole('ADMIN') or (hasRole('USER') and @taskAuth.canDelete(#id, authentication))")
     public void deleteTask(Long id) {
         repository.deleteById(id);
     }
