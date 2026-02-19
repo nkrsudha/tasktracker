@@ -6,6 +6,9 @@ import com.sudha.tasktracker.service.TaskService;
 import com.sudha.tasktracker.model.TaskStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+
 import java.util.List;
 import java.util.Map;
 
@@ -21,9 +24,19 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> getAllTasks() {
-        return service.getAllTasks();
+public List<Task> getAllTasks(Authentication authentication) {
+
+    boolean isAdmin = authentication.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .anyMatch(a -> a.equals("ROLE_ADMIN"));
+
+    if (isAdmin) {
+        return service.getAllTasks(); // admin sees all
     }
+
+    // user/viewer sees only own tasks
+    return service.getTasksByUsername(authentication.getName());
+}
 
     @GetMapping("/{id}")
     public Task getTaskById(@PathVariable Long id) {

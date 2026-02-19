@@ -13,7 +13,13 @@ public class TaskAuthorization {
         this.taskRepository = taskRepository;
     }
 
+    public boolean isOwner(Long taskId, Authentication authentication) {
+    if (authentication == null) return false;
+    return taskRepository.existsByIdAndAssignedUser_UsernameIgnoreCase(
+        taskId,authentication.getName());
+}
     public boolean canDelete(Long taskId, Authentication authentication) {
+        if (authentication == null) return false;
         return taskRepository.existsByIdAndAssignedUser_UsernameIgnoreCase(taskId, authentication.getName());
     }
 }

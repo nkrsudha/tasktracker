@@ -8,7 +8,6 @@ import com.sudha.tasktracker.repository.TaskRepository;
 import com.sudha.tasktracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.security.access.prepost.PreAuthorize;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +56,7 @@ public class TaskService {
         task.setStatus(request.getStatus() != null ? request.getStatus() : TaskStatus.TO_DO);
         return repository.save(task);
     }
+    @PreAuthorize("hasRole('ADMIN') or @taskAuth.isOwner(#id, authentication)")
 
     public Task updateTask(Long id, Task updatedTask) {
         return repository.findById(id)
@@ -80,7 +80,7 @@ public class TaskService {
                 })
                 .orElseThrow(() -> new RuntimeException("Task not found"));
     }
-    @PreAuthorize("hasRole('ADMIN') or (hasRole('USER') and @taskAuth.canDelete(#id, authentication))")
+    @PreAuthorize("hasRole('ADMIN') or @taskAuth.isOwner(#id, authentication)")
     public void deleteTask(Long id) {
         repository.deleteById(id);
     }

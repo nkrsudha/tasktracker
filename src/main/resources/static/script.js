@@ -39,7 +39,7 @@ function applyRoleUI() {
   const isViewer = CURRENT_ROLE === "ROLE_VIEWER";
 
   // Hide Users icon for non-admin
-  const userIcon = document.getElementById("userBtn"); // change to usersBtn if you used that id
+  const userIcon = document.getElementById("usersBtn"); // change to usersBtn if you used that id
   if (userIcon && !isAdmin) userIcon.style.display = "none";
 
   // Viewer: hide add task + delete column, disable assign/status
@@ -364,15 +364,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 2) apply UI hiding
   applyRoleUI();
+  
+  // Always open Tasks page after login
+ showSection('taskSection');
+ loadTasks();
 
-  // 3) load correct section/data
-  if (CURRENT_ROLE === "ROLE_ADMIN") {
-    showSection('userSection');
-    loadUsers(); // admin can load users
-  } else {
-    showSection('taskSection');
-    loadTasks(); // non-admin should NOT call /api/users
-  }
+// Admin can still load users in background
+if (CURRENT_ROLE === "ROLE_ADMIN") {
+  loadUsers();
+}
+
 
   // Popup setup (your existing code) 
   const userTasksModal = document.getElementById("userTasksModal");
