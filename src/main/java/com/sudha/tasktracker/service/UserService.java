@@ -32,7 +32,14 @@ public class UserService {
 
     public User createUser(User user) 
     {
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // hash password before saving
+
+    if (user.getPassword() == null || user.getPassword().isBlank()) 
+    {
+        throw new IllegalArgumentException("Password cannot be empty");
+    }
+
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         return repository.save(user);
     }
 
