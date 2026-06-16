@@ -29,38 +29,38 @@ class DbUserDetailsServiceTest {
     void shouldLoadUserByUsernameSuccessfully() {
 
         User user = new User();
-        user.setUsername("navin");
+        user.setUsername("testuser");
         user.setPassword("encodedPassword");
         user.setRole(Role.USER);
 
-        when(userRepository.findByUsername("navin"))
+        when(userRepository.findByUsername("testuser"))
                 .thenReturn(Optional.of(user));
 
         UserDetails userDetails =
-                dbUserDetailsService.loadUserByUsername("navin");
+                dbUserDetailsService.loadUserByUsername("testuser");
 
         assertNotNull(userDetails);
-        assertEquals("navin", userDetails.getUsername());
+        assertEquals("testuser", userDetails.getUsername());
         assertEquals("encodedPassword", userDetails.getPassword());
 
         verify(userRepository, times(1))
-                .findByUsername("navin");
+                .findByUsername("testuser");
     }
 
     @Test
     void shouldThrowExceptionWhenUserNotFound() {
 
-        when(userRepository.findByUsername("unknown"))
+        when(userRepository.findByUsername("missinguser"))
                 .thenReturn(Optional.empty());
 
         UsernameNotFoundException exception =
                 assertThrows(
                         UsernameNotFoundException.class,
-                        () -> dbUserDetailsService.loadUserByUsername("unknown")
+                        () -> dbUserDetailsService.loadUserByUsername("missinguser")
                 );
 
         assertEquals(
-                "User not found: unknown",
+                "User not found: missinguser",
                 exception.getMessage()
         );
     }
@@ -69,15 +69,15 @@ class DbUserDetailsServiceTest {
     void shouldAssignRoleUserAuthority() {
 
         User user = new User();
-        user.setUsername("navin");
+        user.setUsername("testuser");
         user.setPassword("password");
         user.setRole(Role.USER);
 
-        when(userRepository.findByUsername("navin"))
+        when(userRepository.findByUsername("testuser"))
                 .thenReturn(Optional.of(user));
 
         UserDetails userDetails =
-                dbUserDetailsService.loadUserByUsername("navin");
+                dbUserDetailsService.loadUserByUsername("testuser");
 
         assertTrue(
                 userDetails.getAuthorities()
@@ -90,15 +90,15 @@ class DbUserDetailsServiceTest {
     void shouldAssignRoleAdminAuthority() {
 
         User user = new User();
-        user.setUsername("admin");
+        user.setUsername("adminuser");
         user.setPassword("password");
         user.setRole(Role.ADMIN);
 
-        when(userRepository.findByUsername("admin"))
+        when(userRepository.findByUsername("adminuser"))
                 .thenReturn(Optional.of(user));
 
         UserDetails userDetails =
-                dbUserDetailsService.loadUserByUsername("admin");
+                dbUserDetailsService.loadUserByUsername("adminuser");
 
         assertTrue(
                 userDetails.getAuthorities()
@@ -111,15 +111,15 @@ class DbUserDetailsServiceTest {
     void shouldReturnSingleAuthority() {
 
         User user = new User();
-        user.setUsername("viewer");
+        user.setUsername("vieweruser");
         user.setPassword("password");
         user.setRole(Role.VIEWER);
 
-        when(userRepository.findByUsername("viewer"))
+        when(userRepository.findByUsername("vieweruser"))
                 .thenReturn(Optional.of(user));
 
         UserDetails userDetails =
-                dbUserDetailsService.loadUserByUsername("viewer");
+                dbUserDetailsService.loadUserByUsername("vieweruser");
 
         assertEquals(
                 1,
