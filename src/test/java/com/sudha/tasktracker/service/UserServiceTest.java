@@ -131,3 +131,4 @@ class UserServiceTest {
         verify(repository, times(1)).deleteById(userId);
     }
 }
+
